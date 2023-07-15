@@ -1,5 +1,6 @@
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 // Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
@@ -88,7 +89,7 @@ function remind(birthdays) {
       text: `L'anniversaire de ${person.name} est le ${dateString} ! (${person.dateOfBirth.getFullYear()}, ${pluralize(person.age, 'an')})`,
     };
 
-    console.log(mailOptions)
+    // console.log(mailOptions)
     
     // Send the email
     transporter.sendMail(mailOptions, function(error, info) {
@@ -98,7 +99,18 @@ function remind(birthdays) {
         console.log('Email sent: ' + info.response);
       }
     });
+    
+    // Send an SMS
+    axios.get(`https://smsapi.free-mobile.fr/sendmsg?user=18347461&pass=652SyeT0q1dSxv&msg=${mailOptions.text} `)
+    .then(response => {
+      console.log('Response:', response);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
+
+
 
 }
 
