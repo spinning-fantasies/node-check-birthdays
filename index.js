@@ -101,7 +101,7 @@ function remind(birthdays) {
     });
     
     // Send an SMS
-    axios.get(`https://smsapi.free-mobile.fr/sendmsg?user=18347461&pass=652SyeT0q1dSxv&msg=${mailOptions.text} `)
+    axios.get(`https://smsapi.free-mobile.fr/sendmsg/&msg=${mailOptions.text} `)
     .then(response => {
       console.log('Response:', response);
     })
